@@ -12,7 +12,7 @@ class ZincMechaParser:
 
     def parse_products(self):
         products_names: list[str] = []
-        products_prices: list[float] = []
+        products_prices: list[str] = []
 
         response: Response = requests.get(self.url)
 
@@ -23,8 +23,17 @@ class ZincMechaParser:
                 self.__get_product_data('h2', product, products_names)
                 self.__get_product_data('span', product, products_prices)
 
+        self.__convert_prices_form_str(products_prices)
+
     def __get_product_data(self, field: str, product: BeautifulSoup, data_contatiner: list[str]):
         name = product.find(field)
 
         if name is not None and name != -1:
             data_contatiner.append(name.get_text())
+
+    def __convert_prices_form_str(self, product_prices):
+        for i in range(len(product_prices)):
+            if product_prices[i].find(',') == 1:
+                product_prices[i] = product_prices[i].replace(',', '')
+
+            product_prices[i] = float(product_prices[i][:-2])
