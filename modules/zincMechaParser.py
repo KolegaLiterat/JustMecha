@@ -12,6 +12,7 @@ class ZincMechaParser:
 
     def parse_products(self):
         products_names: list[str] = []
+        products_prices: list[float] = []
 
         response: Response = requests.get(self.url)
 
@@ -19,10 +20,11 @@ class ZincMechaParser:
 
         for summary_wrap in soup.find_all('div', class_='astra-shop-summary-wrap'):
             for product in summary_wrap:
-                self.__get_products_names(product, products_names)
+                self.__get_product_data('h2', product, products_names)
+                self.__get_product_data('span', product, products_prices)
 
-    def __get_products_names(self, product: BeautifulSoup, products_names: list[str]):
-        name = product.find('h2')
+    def __get_product_data(self, field: str, product: BeautifulSoup, data_contatiner: list[str]):
+        name = product.find(field)
 
         if name is not None and name != -1:
-            products_names.append(name.get_text())
+            data_contatiner.append(name.get_text())
