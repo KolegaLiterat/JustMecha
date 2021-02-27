@@ -19,12 +19,12 @@ class MirageShopParser:
         response: Response = requests.get(url)
 
         soup = BeautifulSoup(response.content, 'html.parser')
-        # self.__get_products_names(soup, products_names)
+        self.__get_products_names(soup, products_names)
         self.__get_products_prices(soup, products_prices)
 
         self.__convert_prices_from_str(products_prices)
 
-        print(products_prices)
+        return zip(products_names, products_prices)
 
     def __build_url(self) -> str:
         url: str = 'empty'

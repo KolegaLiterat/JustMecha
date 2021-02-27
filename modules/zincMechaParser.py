@@ -2,6 +2,7 @@ import requests
 from requests.models import Response
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
+from modules.validator import Validator
 
 
 @dataclass
@@ -12,6 +13,8 @@ class ZincMechaParser:
         self.mecha_scale = mecha_scale
 
     def parse_products(self):
+        validator = Validator()
+
         products_names: list[str] = []
         products_prices: list[str] = []
 
@@ -33,7 +36,15 @@ class ZincMechaParser:
 
         self.__convert_prices_form_str(products_prices)
 
-        return zip(products_names, products_prices)
+        list_validation: list[bool] = [
+            validator.zip_check(products_names),
+            validator.zip_check(products_prices)
+        ]
+
+        if not all(list_validation):
+            raise Exception(f'Check product parser!\nProducts: {list_validation[0]}\nPrices: {list_validation[1]}')
+        else:
+            return zip(products_names, products_prices)
 
     def __build_url(self) -> str:
         url: str = f'https://www.zincmecha.com/product-category/gunpla/{self.mecha_scale}/page/{self.page}/?swoof=1&stock=instock&really_curr_tax=42-product_cat'
