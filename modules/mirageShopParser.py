@@ -13,14 +13,16 @@ class MirageShopParser:
 
     def parse_products(self):
         products_names: list[str] = []
+        products_prices: list[str] = []
 
         url: str = self.__build_url()
         response: Response = requests.get(url)
 
         soup = BeautifulSoup(response.content, 'html.parser')
-        self.__get_products_names(soup, products_names)
+        # self.__get_products_names(soup, products_names)
+        self.__get_products_prices(soup, products_prices)
 
-        print(products_names)
+        print(products_prices)
 
     def __build_url(self) -> str:
         url: str = 'empty'
@@ -40,3 +42,7 @@ class MirageShopParser:
     def __get_products_names(self, soup, data_container: list[str]):
         for product_row in soup.find_all('a', class_='prodname f-row'):
             data_container.append(product_row.get('title'))
+
+    def __get_products_prices(self, soup, data_container: list[str]):
+        for price_row in soup.find_all('div', class_='price f-row'):
+            data_container.append(price_row.find('em').get_text())
