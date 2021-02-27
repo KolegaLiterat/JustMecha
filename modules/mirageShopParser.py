@@ -22,6 +22,8 @@ class MirageShopParser:
         # self.__get_products_names(soup, products_names)
         self.__get_products_prices(soup, products_prices)
 
+        self.__convert_prices_from_str(products_prices)
+
         print(products_prices)
 
     def __build_url(self) -> str:
@@ -46,3 +48,7 @@ class MirageShopParser:
     def __get_products_prices(self, soup, data_container: list[str]):
         for price_row in soup.find_all('div', class_='price f-row'):
             data_container.append(price_row.find('em').get_text())
+
+    def __convert_prices_from_str(self, products_prices: list[str]):
+        for i in range(len(products_prices)):
+            products_prices[i] = float(products_prices[i][:-3].replace(',', '.'))
