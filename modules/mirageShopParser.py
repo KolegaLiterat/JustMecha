@@ -12,9 +12,15 @@ class MirageShopParser:
         self.mecha_scale = mecha_scale
 
     def parse_products(self):
-        url: str = self.__build_url()
+        products_names: list[str] = []
 
-        print(url)
+        url: str = self.__build_url()
+        response: Response = requests.get(url)
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.__get_products_names(soup, products_names)
+
+        print(products_names)
 
     def __build_url(self) -> str:
         url: str = 'empty'
@@ -30,3 +36,7 @@ class MirageShopParser:
                 break
 
         return url
+
+    def __get_products_names(self, soup, data_container: list[str]):
+        for product_row in soup.find_all('a', class_='prodname f-row'):
+            data_container.append(product_row.get('title'))
