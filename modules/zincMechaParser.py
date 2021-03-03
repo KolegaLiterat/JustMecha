@@ -36,13 +36,8 @@ class ZincMechaParser:
 
         self.__convert_prices_form_str(products_prices)
 
-        list_validation: list[bool] = [
-            validator.zip_check(products_names),
-            validator.zip_check(products_prices)
-        ]
-
-        if not all(list_validation):
-            raise Exception(f'Check product parser!\nProducts: {list_validation[0]}\nPrices: {list_validation[1]}')
+        if not validator.list_validation(products_names, products_prices):
+            raise Exception(f'Check product parser for Zinch Mecha!!')
         else:
             return zip(products_names, products_prices)
 

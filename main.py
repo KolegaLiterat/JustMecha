@@ -1,6 +1,5 @@
-from modules.zincMechaParser import ZincMechaParser
 from modules.mirageShopParser import MirageShopParser
-import pandas as pd
+from modules.zincMechaParser import ZincMechaParser
 
 
 def main():
@@ -12,6 +11,9 @@ def main():
         zinc_mecha_products_mg = zinc_mecha_mg.parse_products()
     except Exception as parser_error:
         print(parser_error)
+    else:
+        for element in zinc_mecha_products_mg:
+            print(element)
 
 
     # zinc_mecha_products_hg = zinc_mecha_hg.parse_products()

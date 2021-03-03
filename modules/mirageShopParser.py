@@ -2,6 +2,8 @@ import requests
 from requests.models import Response
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
+from modules.validator import Validator
+
 
 
 @dataclass
@@ -12,6 +14,8 @@ class MirageShopParser:
         self.mecha_scale = mecha_scale
 
     def parse_products(self):
+        validator = Validator()
+
         products_names: list[str] = []
         products_prices: list[str] = []
 
@@ -24,7 +28,10 @@ class MirageShopParser:
 
         self.__convert_prices_from_str(products_prices)
 
-        return zip(products_names, products_prices)
+        if not validator.list_validation(products_names, products_prices):
+            raise Exception(f'Check product parser for Zinch Mecha!!')
+        else:
+            return zip(products_names, products_prices)
 
     def __build_url(self) -> str:
         url: str = 'empty'
