@@ -42,7 +42,8 @@ class ZincMechaParser:
             return zip(products_names, products_prices)
 
     def __build_url(self) -> str:
-        url: str = f'https://www.zincmecha.com/product-category/gunpla/{self.mecha_scale}/page/{self.page}/?swoof=1&stock=instock&really_curr_tax=42-product_cat'
+        url: str = f'https://www.zincmecha.com/product-category/gunpla/{self.mecha_scale}/page/{self.page}/?swoof=1' \
+                   f'&stock=instock&really_curr_tax=42-product_cat '
 
         return url
 

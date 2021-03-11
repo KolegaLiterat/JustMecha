@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from modules.validator import Validator
 
 
-
 @dataclass
 class MirageShopParser:
 
