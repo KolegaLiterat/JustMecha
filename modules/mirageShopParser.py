@@ -38,7 +38,8 @@ class MirageShopParser:
         shop_urls: list[str] = [
             f'https://www.mhshop.pl/pl/c/High-Grade-HG-1144/249/1/default/1/f_availability_2/{self.page}',
             f'https://www.mhshop.pl/pl/c/Master-Grade-MG-1100/17/1/default/1/f_availability_2/{self.page}',
-            f'https://www.mhshop.pl/pl/c/Perfect-Grade-PG-160/18/1/default/1/f_availability_2/{self.page}'
+            f'https://www.mhshop.pl/pl/c/Perfect-Grade-PG-160/18/1/default/1/f_availability_2/{self.page}',
+            f'https://www.mhshop.pl/pl/c/Real-Grade-RG-1144/15/1/default/1/f_availability_2/{self.page}'
         ]
 
         for link in shop_urls:

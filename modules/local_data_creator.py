@@ -22,6 +22,12 @@ class LocalDataCraeator():
                 if data is not None:
                     self.__iterate_over_data(data, zinch_mecha_scale, 'zinch')
 
+            for mirage_shop_scale in mirage_shop_scales:
+                data = self.__get_zipped_data(mirage_shop_scale, 'mirage')
+
+                if data is not None:
+                    self.__iterate_over_data(data, mirage_shop_scale, 'mirage')
+
         except Exception as data_error:
             print(data_error)
 
