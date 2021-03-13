@@ -10,7 +10,7 @@ class LocalDataCraeator():
         self.data_path = data_path
 
     def save_data(self):
-        zinch_mecha_scales: list[str] = ["mg-1-00", 'hg-1-144', 'pg-1-60']
+        zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60']
         mirage_shop_scales: list[str] = ["High-Grade-HG-1144", 'Real-Grade-RG-1144', 'Master-Grade-MG-1100',
                                          'Perfect-Grade-PG-160']
 
@@ -35,6 +35,6 @@ class LocalDataCraeator():
                 catalogue = MirageShopParser(scale)
                 zipped_data = catalogue.parse_products()
         except Exception as data_error:
-            print(data_error)
+            print(f'{data_error} <==> {scale}')
         else:
             return zipped_data
