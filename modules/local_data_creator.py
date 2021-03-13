@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass
+import pprint as please
 from modules.mirageShopParser import MirageShopParser
 from modules.zincMechaParser import ZincMechaParser
 
@@ -19,8 +20,8 @@ class LocalDataCraeator():
                 data = self.__get_zipped_data(zinch_mecha_scale, 'zinch')
 
                 if data is not None:
-                    for element in data:
-                        print(element)
+                    self.__iterate_over_data(data, zinch_mecha_scale,'zinch')
+
         except Exception as data_error:
             print(data_error)
 
@@ -38,3 +39,15 @@ class LocalDataCraeator():
             print(f'{data_error} <==> {scale}')
         else:
             return zipped_data
+
+    def __iterate_over_data(self, parsed_data, scale: str, shop: str):
+        for element in parsed_data:
+            self.__create_record(element, scale, shop)
+
+    def __create_record(self, mecha_data: str, scale: str, shop):
+        record: dict = {
+            "Mecha": mecha_data[0],
+            "Price": mecha_data[1],
+            "Scale": scale,
+            "Shop" : shop,
+        }
