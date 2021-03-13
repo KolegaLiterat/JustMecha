@@ -20,7 +20,7 @@ class LocalDataCraeator():
                 data = self.__get_zipped_data(zinch_mecha_scale, 'zinch')
 
                 if data is not None:
-                    self.__iterate_over_data(data, zinch_mecha_scale,'zinch')
+                    self.__iterate_over_data(data, zinch_mecha_scale, 'zinch')
 
         except Exception as data_error:
             print(data_error)
@@ -42,12 +42,19 @@ class LocalDataCraeator():
 
     def __iterate_over_data(self, parsed_data, scale: str, shop: str):
         for element in parsed_data:
-            self.__create_record(element, scale, shop)
+            record = self.__create_record(element, scale, shop)
+            self.__append_to_file(record)
 
     def __create_record(self, mecha_data: str, scale: str, shop):
         record: dict = {
             "Mecha": mecha_data[0],
             "Price": mecha_data[1],
             "Scale": scale,
-            "Shop" : shop,
+            "Shop": shop,
         }
+
+        return record
+
+    def __append_to_file(self, data):
+        with open(self.data_path, mode='a') as json_file:
+            json.dump(data, json_file)
