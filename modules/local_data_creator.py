@@ -1,6 +1,6 @@
-import json
+import datetime
+import csv
 from dataclasses import dataclass
-import pprint as please
 from modules.mirageShopParser import MirageShopParser
 from modules.zincMechaParser import ZincMechaParser
 
@@ -9,6 +9,8 @@ from modules.zincMechaParser import ZincMechaParser
 class LocalDataCraeator():
     def __init__(self, data_path: str):
         self.data_path = data_path
+        self.records = []
+        self.date = datetime.datetime.now()
 
     def save_data(self):
         zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60']
@@ -30,6 +32,8 @@ class LocalDataCraeator():
 
         except Exception as data_error:
             print(data_error)
+        else:
+            self.__write_to_file()
 
     def __get_zipped_data(self, scale: str, shop: str):
         zipped_data = None
@@ -48,19 +52,25 @@ class LocalDataCraeator():
 
     def __iterate_over_data(self, parsed_data, scale: str, shop: str):
         for element in parsed_data:
-            record = self.__create_record(element, scale, shop)
-            self.__append_to_file(record)
+            self.records.append(self.__create_record(element, scale, shop))
 
     def __create_record(self, mecha_data: str, scale: str, shop):
         record: dict = {
             "Mecha": mecha_data[0],
             "Price": mecha_data[1],
+            "Seen": datetime.datetime.fromtimestamp(self.date.timestamp()).strftime('%d-%m-%y'),
             "Scale": scale,
             "Shop": shop,
         }
 
         return record
 
-    def __append_to_file(self, data):
-        with open(self.data_path, mode='a') as json_file:
-            json.dump(data, json_file)
+    def __write_to_file(self):
+        with open(self.data_path, mode='a', newline='') as csv_file:
+            header: list[str] = list(self.records[0].keys())
+
+            writer = csv.DictWriter(csv_file, fieldnames=header, dialect='unix')
+            writer.writeheader()
+
+            for record in self.records:
+                writer.writerow(record)
