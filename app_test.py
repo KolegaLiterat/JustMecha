@@ -1,6 +1,7 @@
-import json
+import csv
 from modules.zincMechaParser import ZincMechaParser
 from modules.mirageShopParser import MirageShopParser
+from modules.local_data_creator import LocalDataCraeator
 
 
 def test_zinch_mecha():
@@ -14,5 +15,12 @@ def test_mirage_shop():
 
 
 def test_json_file():
-    with open('data/products.json', mode='r') as file:
-        json_file = json.load(file)
+    with open('data/products.csv', mode='r') as file:
+        reader = csv.reader(file)
+
+
+def test_data_creation():
+    local_data_creator = LocalDataCraeator('data/products.csv', True)
+    data = local_data_creator.save_data()
+
+    assert data > 0

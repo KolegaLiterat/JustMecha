@@ -7,10 +7,11 @@ from modules.zincMechaParser import ZincMechaParser
 
 @dataclass
 class LocalDataCraeator():
-    def __init__(self, data_path: str):
+    def __init__(self, data_path: str, is_being_tested: bool):
         self.data_path = data_path
         self.records = []
         self.date = datetime.datetime.now()
+        self.is_being_tested = is_being_tested
 
     def save_data(self):
         zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60']
@@ -33,7 +34,10 @@ class LocalDataCraeator():
         except Exception as data_error:
             print(data_error)
         else:
-            self.__write_to_file()
+            if not self.is_being_tested:
+                self.__write_to_file()
+                
+            return len(self.records)
 
     def __get_zipped_data(self, scale: str, shop: str):
         zipped_data = None
