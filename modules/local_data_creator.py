@@ -17,7 +17,7 @@ class LocalDataCraeator():
         zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60']
         mirage_shop_scales: list[str] = ["High-Grade-HG-1144", 'Real-Grade-RG-1144', 'Master-Grade-MG-1100',
                                          'Perfect-Grade-PG-160']
-        
+
         try:
             for zinch_mecha_scale in zinch_mecha_scales:
                 data = self.__get_zipped_data(zinch_mecha_scale, 'zinch')
