@@ -10,7 +10,8 @@ def main():
 
     dataframe = pd.read_csv('data/products.csv')
 
-    please.pprint(dataframe['Seen'])
+    please.pprint(dataframe)
+
 
 if __name__ == '__main__':
     main()
