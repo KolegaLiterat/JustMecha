@@ -78,3 +78,9 @@ class LocalDataCraeator():
 
             for record in self.records:
                 writer.writerow(record)
+
+        self.__save_last_data_parse()
+
+    def __save_last_data_parse(self):
+        with open('data/data_save.txt', mode='w') as date_file:
+            date_file.write(datetime.datetime.fromtimestamp(self.date.timestamp()).strftime('%d-%m-%y'))
