@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import csv
 from dataclasses import dataclass
 from modules.mirageShopParser import MirageShopParser
@@ -10,7 +10,7 @@ class LocalDataCraeator():
     def __init__(self, data_path: str, is_being_tested: bool):
         self.data_path = data_path
         self.records = []
-        self.date = datetime.datetime.now()
+        self.date = dt.datetime.fromtimestamp(dt.datetime.now().timestamp()).strftime('%d-%m-%Y')
         self.is_being_tested = is_being_tested
 
     def save_data(self):
@@ -62,7 +62,7 @@ class LocalDataCraeator():
         record: dict = {
             "Mecha": mecha_data[0],
             "Price": mecha_data[1],
-            "Seen": datetime.datetime.fromtimestamp(self.date.timestamp()).strftime('%d-%m-%y'),
+            "Seen": self.date,
             "Scale": scale,
             "Shop": shop,
         }
@@ -83,4 +83,4 @@ class LocalDataCraeator():
 
     def __save_last_data_parse(self):
         with open('data/data_save.txt', mode='w') as date_file:
-            date_file.write(datetime.datetime.fromtimestamp(self.date.timestamp()).strftime('%d-%m-%y'))
+            date_file.write(self.date)
