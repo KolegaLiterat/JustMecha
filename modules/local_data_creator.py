@@ -14,6 +14,7 @@ class LocalDataCraeator():
         self.is_being_tested = is_being_tested
 
     def save_data(self):
+    #TODO brakuje real grade w zincu, do ujednoliczenia są skale
         zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60']
         mirage_shop_scales: list[str] = ["High-Grade-HG-1144", 'Real-Grade-RG-1144', 'Master-Grade-MG-1100',
                                          'Perfect-Grade-PG-160']
@@ -71,6 +72,8 @@ class LocalDataCraeator():
 
     def __write_to_file(self):
         with open(self.data_path, mode='a', newline='') as csv_file:
+
+            #TODO trzeba sprawdzać czy jest header, w przeciwnym razie jest generowany przy każdym obiegu pętli
             header: list[str] = list(self.records[0].keys())
 
             writer = csv.DictWriter(csv_file, fieldnames=header, dialect='unix')
