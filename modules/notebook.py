@@ -1,10 +1,13 @@
 import datetime as dt
 import pandas as pd
+import plotly.express as px
 from modules.local_data_creator import LocalDataCraeator
 
 
 def run():
-    __get_data('data/products.csv')
+    dataframe = __get_data('data/products.csv')
+
+    __create_box_plot(dataframe)
 
 
 def __get_data(filename: str):
@@ -21,8 +24,8 @@ def __get_data(filename: str):
         else:
             dataframe = __create_dataframe(local, filename)
 
-    display(dataframe)
 
+    return dataframe
 
 def __is_update_needed() -> bool:
     now = dt.datetime.now()
@@ -47,3 +50,8 @@ def __create_dataframe(save_data_manager, filename) -> pd.DataFrame:
         dataframe = pd.read_csv(filename)
 
     return dataframe
+
+def __create_box_plot(dataframe):
+    fig = px.box(dataframe, x='Shop', y='Price', color="Scale")
+
+    fig.show()
