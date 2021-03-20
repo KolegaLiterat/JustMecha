@@ -2,8 +2,10 @@ import datetime as dt
 import pandas as pd
 from modules.local_data_creator import LocalDataCraeator
 
+
 def run():
     __get_data('data/products.csv')
+
 
 def __get_data(filename: str):
     local = LocalDataCraeator(filename, False)
@@ -12,14 +14,15 @@ def __get_data(filename: str):
         __is_update_needed()
 
     except Exception:
-        print('No file!')
-        # local.save_data()
+        dataframe = __create_dataframe(local, filename)
     else:
         if __is_update_needed():
             local.save_data()
         else:
-            dataframe = pd.read_csv(filename)
-            display(dataframe)
+            dataframe = __create_dataframe(local, filename)
+
+    display(dataframe)
+
 
 def __is_update_needed() -> bool:
     now = dt.datetime.now()
@@ -34,3 +37,13 @@ def __is_update_needed() -> bool:
             is_date_different = False
 
     return is_date_different
+
+
+def __create_dataframe(save_data_manager, filename) -> pd.DataFrame:
+    try:
+        dataframe = pd.read_csv(filename)
+    except Exception:
+        save_data_manager.save_data()
+        dataframe = pd.read_csv(filename)
+
+    return dataframe
