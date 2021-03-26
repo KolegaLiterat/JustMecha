@@ -54,6 +54,7 @@ def __create_dataframe() -> pd.DataFrame:
 
 
 def __create_box_plot(dataframe):
-    fig = px.box(dataframe, x='Shop', y='Price', color="Scale")
+    fig = px.box(dataframe, x='Shop', y='Price', color="Scale",
+                 title='Prezentacja cen w sklepach',)
 
     fig.show()
