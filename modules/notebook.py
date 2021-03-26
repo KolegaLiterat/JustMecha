@@ -5,6 +5,7 @@ from modules.local_data_creator import LocalDataCraeator
 
 local = LocalDataCraeator('data/products.csv', False)
 
+
 def run():
     dataframe = __get_data()
 
@@ -55,6 +56,6 @@ def __create_dataframe() -> pd.DataFrame:
 
 def __create_box_plot(dataframe):
     fig = px.box(dataframe, x='Shop', y='Price', color="Scale",
-                 title='Prezentacja cen w sklepach',)
+                 title='Shop prices', )
 
     fig.show()

@@ -14,7 +14,6 @@ class LocalDataCraeator:
         self.is_being_tested = is_being_tested
 
     def save_data(self):
-    #TODO brakuje real grade w zincu, do ujednoliczenia są skale
         zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60', 'rg-1-144']
         mirage_shop_scales: list[str] = ["High-Grade-HG-1144", 'Real-Grade-RG-1144', 'Master-Grade-MG-1100',
                                          'Perfect-Grade-PG-160']
@@ -55,9 +54,22 @@ class LocalDataCraeator:
         else:
             return zipped_data
 
+    def __get_scale_id(self, mecha_scale):
+        scale_ids = ['MG', 'RG', 'HG', 'PG']
+        selected_scale = 'Empty'
+
+        for scale in scale_ids:
+            if mecha_scale.find(scale) != -1 or mecha_scale.find(scale.lower()) != -1:
+                selected_scale = scale
+                break
+
+        return selected_scale
+
     def __iterate_over_data(self, parsed_data, scale: str, shop: str):
+        scale_id = self.__get_scale_id(scale)
+
         for element in parsed_data:
-            self.records.append(self.__create_record(element, scale, shop))
+            self.records.append(self.__create_record(element, scale_id, shop))
 
     def __create_record(self, mecha_data: str, scale: str, shop):
         record: dict = {
