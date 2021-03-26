@@ -8,7 +8,7 @@ def main():
     local = LocalDataCraeator('data/products.csv', False)
     local.save_data()
 
-    dataframe = pd.read_csv('data/products.csv')
+    dataframe = pd.read_csv('data/products.csv', names=local.header)
 
     please.pprint(dataframe)
 

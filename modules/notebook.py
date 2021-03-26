@@ -3,29 +3,28 @@ import pandas as pd
 import plotly.express as px
 from modules.local_data_creator import LocalDataCraeator
 
+local = LocalDataCraeator('data/products.csv', False)
 
 def run():
-    dataframe = __get_data('data/products.csv')
+    dataframe = __get_data()
 
     __create_box_plot(dataframe)
 
 
-def __get_data(filename: str):
-    local = LocalDataCraeator(filename, False)
-
+def __get_data():
     try:
         __is_update_needed()
 
     except Exception:
-        dataframe = __create_dataframe(local, filename)
+        dataframe = __create_dataframe()
     else:
         if __is_update_needed():
             local.save_data()
         else:
-            dataframe = __create_dataframe(local, filename)
-
+            dataframe = __create_dataframe()
 
     return dataframe
+
 
 def __is_update_needed() -> bool:
     now = dt.datetime.now()
@@ -42,14 +41,17 @@ def __is_update_needed() -> bool:
     return is_date_different
 
 
-def __create_dataframe(save_data_manager, filename) -> pd.DataFrame:
+def __create_dataframe() -> pd.DataFrame:
+    header = ['Mecha', 'Price', 'Seen', 'Scale', 'Shop']
+
     try:
-        dataframe = pd.read_csv(filename)
+        dataframe = pd.read_csv('data/products.csv', names=header)
     except Exception:
-        save_data_manager.save_data()
-        dataframe = pd.read_csv(filename)
+        local.save_data()
+        dataframe = pd.read_csv('data/products.csv', names=header)
 
     return dataframe
+
 
 def __create_box_plot(dataframe):
     fig = px.box(dataframe, x='Shop', y='Price', color="Scale")

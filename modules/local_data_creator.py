@@ -6,7 +6,7 @@ from modules.zincMechaParser import ZincMechaParser
 
 
 @dataclass
-class LocalDataCraeator():
+class LocalDataCraeator:
     def __init__(self, data_path: str, is_being_tested: bool):
         self.data_path = data_path
         self.records = []
@@ -72,12 +72,7 @@ class LocalDataCraeator():
 
     def __write_to_file(self):
         with open(self.data_path, mode='a', newline='') as csv_file:
-
-            #TODO trzeba sprawdzać czy jest header, w przeciwnym razie jest generowany przy każdym obiegu pętli
-            header: list[str] = list(self.records[0].keys())
-
-            writer = csv.DictWriter(csv_file, fieldnames=header, dialect='unix')
-            writer.writeheader()
+            writer = csv.DictWriter(csv_file, fieldnames=self.header, dialect='unix')
 
             for record in self.records:
                 writer.writerow(record)
