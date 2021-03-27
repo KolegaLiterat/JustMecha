@@ -4,8 +4,11 @@ from dataclasses import dataclass
 from modules.localDataCreator import LocalDataCraeator
 
 
-@dataclass()
+@dataclass
 class DataframeManager(LocalDataCraeator):
+
+    def __init__(self, data_path: str, is_being_tested: bool):
+        super().__init__(data_path, is_being_tested)
 
     def get_data(self):
         try:
@@ -43,7 +46,7 @@ class DataframeManager(LocalDataCraeator):
         try:
             dataframe = pd.read_csv(self.data_path, names=header)
         except Exception:
-            local.save_data()
+            self.save_data()
             dataframe = pd.read_csv(self.data_path, names=header)
 
         return dataframe

@@ -11,9 +11,11 @@ from modules.dataframeManager import DataframeManager
 # @click.option('--mecha_scale', default='ALL', help='Specify a mecha scale (ALL, HG, RG, MG, PG)')
 # @click.argument('mecha_scale')
 def main(mecha_name):
-    df_manager = DataframeManager()
+    df_manager = DataframeManager(data_path='data/products.csv', is_being_tested=False)
 
-    pprint.pprint(f'{mecha_name}')
+    dataframe = df_manager.get_data()
+
+    pprint.pprint(f'{dataframe}')
 
 
 if __name__ == '__main__':
