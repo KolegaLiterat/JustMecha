@@ -1,7 +1,7 @@
 import csv
 from modules.zincMechaParser import ZincMechaParser
 from modules.mirageShopParser import MirageShopParser
-from modules.local_data_creator import LocalDataCraeator
+from modules.localDataCreator import LocalDataCraeator
 
 
 def test_zinch_mecha():

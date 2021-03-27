@@ -1,7 +1,7 @@
 import datetime as dt
 import pandas as pd
 import plotly.express as px
-from modules.local_data_creator import LocalDataCraeator
+from modules.localDataCreator import LocalDataCraeator
 
 local = LocalDataCraeator('data/products.csv', False)
 
