@@ -15,7 +15,13 @@ def main(mecha_name):
 
     dataframe = df_manager.get_data()
 
-    pprint.pprint(f'{dataframe}')
+    mechas = df_manager.get_mechas_without_scale(dataframe, mecha_name)
+
+    if len(mechas) == 0:
+        click.echo(click.style('Mecha not found!', fg='red'))
+    else:
+        click.echo(mechas)
+
 
 
 if __name__ == '__main__':

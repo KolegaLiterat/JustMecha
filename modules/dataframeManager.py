@@ -24,6 +24,12 @@ class DataframeManager(LocalDataCraeator):
 
         return dataframe
 
+    def get_mechas_without_scale(self, dataframe: pd.DataFrame, mecha_name: str) -> pd.DataFrame:
+        filtered_data: pd.DataFrame = dataframe[dataframe['Mecha'].str.contains(mecha_name, case=False)]
+
+        mechas: pd.DataFrame = filtered_data.drop_duplicates(keep='last').sort_values('Seen', ascending=True)
+
+        return mechas.reset_index(drop=True)
 
     def __is_update_needed(self) -> bool:
         now = dt.datetime.now()
@@ -38,7 +44,6 @@ class DataframeManager(LocalDataCraeator):
                 is_date_different = False
 
         return is_date_different
-
 
     def __create_dataframe(self) -> pd.DataFrame:
         header = ['Mecha', 'Price', 'Seen', 'Scale', 'Shop']
