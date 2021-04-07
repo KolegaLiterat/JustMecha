@@ -25,9 +25,14 @@ class DataframeManager(LocalDataCraeator):
         return dataframe
 
     def get_mechas_without_scale(self, dataframe: pd.DataFrame, mecha_name: str) -> pd.DataFrame:
-        filtered_data: pd.DataFrame = dataframe[dataframe['Mecha'].str.contains(mecha_name, case=False)]
+        mechas: pd.DataFrame = self.__filter_data_by_mecha_name(dataframe, mecha_name)
 
-        mechas: pd.DataFrame = filtered_data.drop_duplicates(keep='last').sort_values('Seen', ascending=True)
+        return mechas.reset_index(drop=True)
+
+    def get_mechas_with_scale(self, dataframe: pd.DataFrame, mecha_name: str, mecha_scale: str) -> pd.DataFrame:
+        filtered_data_by_scale = dataframe.loc[dataframe['Scale'] == mecha_scale]
+
+        mechas = self.__filter_data_by_mecha_name(filtered_data_by_scale, mecha_name)
 
         return mechas.reset_index(drop=True)
 
@@ -55,3 +60,8 @@ class DataframeManager(LocalDataCraeator):
             dataframe = pd.read_csv(self.data_path, names=header)
 
         return dataframe
+
+    def __filter_data_by_mecha_name(self, dataframe: pd.DataFrame, mecha_name: str):
+        filtered_data: pd.DataFrame = dataframe[dataframe['Mecha'].str.contains(mecha_name, case=False)]
+
+        return filtered_data.drop_duplicates(keep='last').sort_values('Seen', ascending=True)

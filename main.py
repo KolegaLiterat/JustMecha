@@ -8,20 +8,27 @@ from modules.dataframeManager import DataframeManager
 @click.command()
 @click.option('--mecha_name', help='Write a name of mecha model, that you\'re looking for')
 @click.argument('mecha_name')
-# @click.option('--mecha_scale', default='ALL', help='Specify a mecha scale (ALL, HG, RG, MG, PG)')
-# @click.argument('mecha_scale')
-def main(mecha_name):
+@click.option('--mecha_scale', help='Specify a mecha scale (ALL, HG, RG, MG, PG)')
+@click.argument('mecha_scale')
+def main(mecha_name, mecha_scale):
     df_manager = DataframeManager(data_path='data/products.csv', is_being_tested=False)
 
     dataframe = df_manager.get_data()
 
-    mechas = df_manager.get_mechas_without_scale(dataframe, mecha_name)
+    if mecha_scale == 'ALL':
+        mechas = df_manager.get_mechas_without_scale(dataframe, mecha_name)
 
-    if len(mechas) == 0:
-        click.echo(click.style('Mecha not found!', fg='red'))
+        if len(mechas) == 0:
+            click.echo(click.style('Mecha not found!', fg='red'))
+        else:
+            click.echo(mechas)
     else:
-        click.echo(mechas)
+        mechas = df_manager.get_mechas_with_scale(dataframe, mecha_name, mecha_scale)
 
+        if len(mechas) == 0:
+            click.echo(click.style('Mecha not found!', fg='red'))
+        else:
+            click.echo(mechas)
 
 
 if __name__ == '__main__':
