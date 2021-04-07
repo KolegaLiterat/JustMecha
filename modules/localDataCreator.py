@@ -83,7 +83,7 @@ class LocalDataCraeator:
         return record
 
     def __write_to_file(self):
-        with open(self.data_path, mode='a', newline='') as csv_file:
+        with open(self.data_path, mode='a', newline='', encoding='utf-8') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=list(self.records[0].keys()), dialect='unix')
 
             for record in self.records:
