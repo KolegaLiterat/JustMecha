@@ -9,11 +9,11 @@ from modules.zincMechaParser import ZincMechaParser
 class LocalDataCraeator:
     def __init__(self, data_path: str, is_being_tested: bool):
         self.data_path = data_path
-        self.records = []
-        self.date = dt.datetime.fromtimestamp(dt.datetime.now().timestamp()).strftime('%d-%m-%Y')
+        self.records: list[dict] = []
+        self.date: dt = dt.datetime.fromtimestamp(dt.datetime.now().timestamp()).strftime('%d-%m-%Y')
         self.is_being_tested = is_being_tested
 
-    def save_data(self):
+    def save_data(self) -> int:
         zinch_mecha_scales: list[str] = ["mg-1-100", 'hg-1-144', 'pg-1-60', 'rg-1-144']
         mirage_shop_scales: list[str] = ["High-Grade-HG-1144", 'Real-Grade-RG-1144', 'Master-Grade-MG-1100',
                                          'Perfect-Grade-PG-160']
@@ -39,7 +39,7 @@ class LocalDataCraeator:
 
             return len(self.records)
 
-    def __get_zipped_data(self, scale: str, shop: str):
+    def __get_zipped_data(self, scale: str, shop: str) -> object:
         zipped_data = None
 
         try:
@@ -54,7 +54,7 @@ class LocalDataCraeator:
         else:
             return zipped_data
 
-    def __get_scale_id(self, mecha_scale):
+    def __get_scale_id(self, mecha_scale) -> str:
         scale_ids = ['MG', 'RG', 'HG', 'PG']
         selected_scale = 'Empty'
 
@@ -71,7 +71,7 @@ class LocalDataCraeator:
         for element in parsed_data:
             self.records.append(self.__create_record(element, scale_id, shop))
 
-    def __create_record(self, mecha_data: str, scale: str, shop):
+    def __create_record(self, mecha_data: str, scale: str, shop) -> dict:
         record: dict = {
             "Mecha": mecha_data[0],
             "Price": mecha_data[1],
