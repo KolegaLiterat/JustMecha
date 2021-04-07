@@ -9,10 +9,10 @@ from modules.validator import Validator
 class MirageShopParser:
 
     def __init__(self, mecha_scale: str):
-        self.page = 1
+        self.page: int = 1
         self.mecha_scale = mecha_scale
 
-    def parse_products(self):
+    def parse_products(self) -> object:
         validator = Validator()
 
         products_names: list[str] = []
@@ -21,7 +21,7 @@ class MirageShopParser:
         url: str = self.__build_url()
         response: Response = requests.get(url)
 
-        soup = BeautifulSoup(response.content, 'html.parser')
+        soup: BeautifulSoup = BeautifulSoup(response.content, 'html.parser')
         self.__get_products_names(soup, products_names)
         self.__get_products_prices(soup, products_prices)
 
@@ -49,11 +49,11 @@ class MirageShopParser:
 
         return url
 
-    def __get_products_names(self, soup, data_container: list[str]):
+    def __get_products_names(self, soup: BeautifulSoup, data_container: list[str]):
         for product_row in soup.find_all('a', class_='prodname f-row'):
             data_container.append(product_row.get('title'))
 
-    def __get_products_prices(self, soup, data_container: list[str]):
+    def __get_products_prices(self, soup: BeautifulSoup, data_container: list[str]):
         for price_row in soup.find_all('div', class_='price f-row'):
             data_container.append(price_row.find('em').get_text())
 
