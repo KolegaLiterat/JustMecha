@@ -9,10 +9,10 @@ from modules.validator import Validator
 class ZincMechaParser:
 
     def __init__(self, mecha_scale: str):
-        self.page = 1
+        self.page: int = 1
         self.mecha_scale = mecha_scale
 
-    def parse_products(self):
+    def parse_products(self) -> object:
         validator = Validator()
 
         products_names: list[str] = []
@@ -53,7 +53,7 @@ class ZincMechaParser:
         if name is not None and name != -1:
             data_contatiner.append(name.get_text())
 
-    def __convert_prices_form_str(self, product_prices):
+    def __convert_prices_form_str(self, product_prices: list[str]):
         for i in range(len(product_prices)):
             if product_prices[i].find(',') == 1:
                 product_prices[i] = product_prices[i].replace(',', '')
