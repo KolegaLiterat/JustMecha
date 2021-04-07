@@ -22,6 +22,7 @@ def main(mecha_name, mecha_scale):
             click.echo(click.style('Mecha not found!', fg='red'))
         else:
             click.echo(mechas)
+            df_manager.get_lowest_price(mechas)
     else:
         mechas = df_manager.get_mechas_with_scale(dataframe, mecha_name, mecha_scale)
 
@@ -29,6 +30,7 @@ def main(mecha_name, mecha_scale):
             click.echo(click.style('Mecha not found!', fg='red'))
         else:
             click.echo(mechas)
+            df_manager.get_lowest_price(mechas)
 
 
 if __name__ == '__main__':

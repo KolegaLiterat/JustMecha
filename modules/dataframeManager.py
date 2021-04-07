@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime as dt
+import pprint as pprint
 from dataclasses import dataclass
 from modules.localDataCreator import LocalDataCraeator
 
@@ -35,6 +36,14 @@ class DataframeManager(LocalDataCraeator):
         mechas = self.__filter_data_by_mecha_name(filtered_data_by_scale, mecha_name)
 
         return mechas.reset_index(drop=True)
+
+    def get_lowest_price(self, dataframe):
+        lowest_price: int = dataframe['Price'].min()
+
+        filtered_by_price: pd.DataFrame = dataframe.loc[dataframe['Price'] == lowest_price]
+        vendor = pd.unique(filtered_by_price['Shop'])
+
+        pprint.pprint(f"Lowest price is {lowest_price}. Can be found in {vendor}")
 
     def __is_update_needed(self) -> bool:
         now = dt.datetime.now()
