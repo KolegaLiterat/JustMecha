@@ -74,4 +74,4 @@ class DataframeManager(LocalDataCraeator):
     def __filter_data_by_mecha_name(self, dataframe: pd.DataFrame, mecha_name: str):
         filtered_data: pd.DataFrame = dataframe[dataframe['Mecha'].str.contains(mecha_name, case=False)]
 
-        return filtered_data.drop_duplicates(keep='last').sort_values('Seen', ascending=True)
+        return filtered_data.drop_duplicates(subset='Mecha', keep='last').sort_values('Seen', ascending=True)
