@@ -42,8 +42,9 @@ class DataframeManager(LocalDataCraeator):
 
         filtered_by_price: pd.DataFrame = dataframe.loc[dataframe['Price'] == lowest_price]
         vendor = pd.unique(filtered_by_price['Shop'])
+        scale = pd.unique(filtered_by_price['Scale'])
 
-        pprint.pprint(f"Lowest price is {lowest_price}. Can be found in {vendor}")
+        pprint.pprint(f"Lowest price is {lowest_price}. Scale: {scale}. Can be found in {vendor}")
 
     def __is_update_needed(self) -> bool:
         now = dt.datetime.now()
