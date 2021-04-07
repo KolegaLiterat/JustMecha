@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class Validator:
 
-    def list_validation(self, products_names: list[str], products_prices: list[float]):
+    def list_validation(self, products_names: list[str], products_prices: list[float]) -> object:
         list_validation: list[bool] = [
             self.__zip_check(products_names),
             self.__zip_check(products_prices)
